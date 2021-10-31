@@ -26,5 +26,8 @@ Route::middleware(['auth:sanctum', 'verified'])->name('dashboard.')->prefix('das
 
     Route::middleware(['admin'])->group(function () {
         Route::resource('product', ProductController::class);
+        Route::resource('product.gallery', \App\Http\Controllers\ProductGalleryController::class)->shallow()->only([
+            'index', 'create', 'store', 'destroy'
+        ]);
     });
 });

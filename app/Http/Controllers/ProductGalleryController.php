@@ -2,8 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ProductGallery;
+use App\Models\Product;
 use Illuminate\Http\Request;
+use App\Models\ProductGallery;
+use Illuminate\Support\Facades\Storage;
+use Yajra\DataTables\Facades\DataTables;
+use App\Http\Requests\ProductGalleryRequest;
 
 class ProductGalleryController extends Controller
 {
@@ -12,9 +16,32 @@ class ProductGalleryController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Product $product)
     {
-        //
+        if (request()->ajax()) {
+            $query = ProductGallery::where('products_id', $product->id);
+
+            return DataTables::of($query)
+                ->addColumn('action', function ($item) {
+                    return '
+                        <form class="inline-block" action="' . route('dashboard.gallery.destroy', $item->id) . '" method="POST">
+                        <button class="border border-red-500 bg-red-500 text-white rounded-md px-2 py-1 m-2 transition duration-500 ease select-none hover:bg-red-600 focus:outline-none focus:shadow-outline" >
+                            Hapus
+                        </button>
+                            ' . method_field('delete') . csrf_field() . '
+                        </form>';
+                })
+                ->editColumn('url', function ($item) {
+                    return '<img style="max-width: 150px;" src="' . Storage::url($item->url) . '"/>';
+                })
+                ->editColumn('is_featured', function ($item) {
+                    return $item->is_featured ? 'Yes' : 'No';
+                })
+                ->rawColumns(['action', 'url'])
+                ->make();
+        }
+
+        return view('pages.dashboard.gallery.index', compact('product'));
     }
 
     /**
@@ -41,10 +68,10 @@ class ProductGalleryController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\ProductGallery  $productGallery
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(ProductGallery $productGallery)
+    public function show($id)
     {
         //
     }
@@ -52,10 +79,10 @@ class ProductGalleryController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Models\ProductGallery  $productGallery
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(ProductGallery $productGallery)
+    public function edit($id)
     {
         //
     }
@@ -64,10 +91,10 @@ class ProductGalleryController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\ProductGallery  $productGallery
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, ProductGallery $productGallery)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -75,10 +102,10 @@ class ProductGalleryController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\ProductGallery  $productGallery
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(ProductGallery $productGallery)
+    public function destroy($id)
     {
         //
     }
