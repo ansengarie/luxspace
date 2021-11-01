@@ -5,10 +5,11 @@ namespace App\Http\Controllers;
 use App\Models\Transaction;
 use Illuminate\Support\Str;
 use Illuminate\Http\Request;
+use App\Models\TransactionItem;
 use Illuminate\Routing\Controller;
 use App\Http\Requests\ProductRequest;
-use App\Models\TransactionItem;
 use Yajra\DataTables\Facades\DataTables;
+use App\Http\Requests\TransactionRequest;
 
 
 class TransactionController extends Controller
@@ -96,7 +97,9 @@ class TransactionController extends Controller
      */
     public function edit(Transaction $transaction)
     {
-        //
+        return view('pages.dashboard.transaction.edit', [
+            'item' => $transaction
+        ]);
     }
 
     /**
@@ -106,9 +109,13 @@ class TransactionController extends Controller
      * @param  \App\Models\Transaction  $transaction
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Transaction $transaction)
+    public function update(TransactionRequest $request, Transaction $transaction)
     {
-        //
+        $data = $request->all();
+
+        $transaction->update($data);
+
+        return redirect()->route('dashboard.transaction.index');
     }
 
     /**
