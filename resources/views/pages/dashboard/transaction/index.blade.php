@@ -40,8 +40,8 @@
                 <thead>
                   <tr>
                     <th>ID</th>
-                    <th>Nama</th>
-                    <th>Telepon</th>
+                    <th>Produk</th>
+                    <th>Harga</th>
                     <th>Kurir</th>
                     <th>Total Harga</th>
                     <th>Status</th>
