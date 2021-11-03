@@ -32,5 +32,8 @@ Route::middleware(['auth:sanctum', 'verified'])->name('dashboard.')->prefix('das
         Route::resource('transaction', \App\Http\Controllers\TransactionController::class)->only([
             'index', 'show', 'edit', 'update'
         ]);
+        Route::resource('user', \App\Http\Controllers\UserController::class)->only([
+            'index', 'edit', 'update', 'destroy'
+        ]);
     });
 });

@@ -1,7 +1,7 @@
 <x-app-layout>
   <x-slot name="header">
       <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-          {{ __('Transaction') }}
+          {{ __('User') }}
       </h2>
   </x-slot>
 
@@ -16,10 +16,8 @@
         columns: [
           {data: 'id', name: 'id', width: '5%'},
           {data: 'name', name: 'name'},
-          {data: 'phone', name: 'phone'},
-          {data: 'courier', name: 'courier'},
-          {data: 'total_price', name: 'total_price'},
-          {data: 'status', name: 'status'},
+          {data: 'email', name: 'email'},
+          {data: 'roles', name: 'roles'},
           {
             data: 'action',
             name: 'action',
@@ -41,16 +39,12 @@
                   <tr>
                     <th>ID</th>
                     <th>Nama</th>
-                    <th>Telepon</th>
-                    <th>Kurir</th>
-                    <th>Total Harga</th>
-                    <th>Status</th>
+                    <th>Email</th>
+                    <th>Roles</th>
                     <th>Aksi</th>
                   </tr>
                 </thead>
-                <tbody>
-
-                </tbody>
+                <tbody></tbody>
               </table>
             </div>
           </div>

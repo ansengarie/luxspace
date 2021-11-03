@@ -4,10 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\Transaction;
 use Illuminate\Support\Str;
-use Illuminate\Http\Request;
 use App\Models\TransactionItem;
 use Illuminate\Routing\Controller;
-use App\Http\Requests\ProductRequest;
 use Yajra\DataTables\Facades\DataTables;
 use App\Http\Requests\TransactionRequest;
 
