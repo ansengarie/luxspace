@@ -60,6 +60,7 @@ class FrontendController extends Controller
     public function checkout(CheckoutRequest $request)
     {
         $data = $request->all();
+        //dd($data);
 
         //Get Carts Data
         $carts = Cart::with(['product'])->where('users_id', Auth::user()->id)->get();
@@ -88,6 +89,7 @@ class FrontendController extends Controller
         Config::$isProduction = config('services.midtrans.isProduction');
         Config::$isSanitized = config('services.midtrans.isSanitized');
         Config::$is3ds = config('services.midtrans.is3ds');
+        // dd(config('services.midtrans.serverKey'));
 
         //Setup variable midtrans
         $midtrans = [
@@ -107,6 +109,7 @@ class FrontendController extends Controller
         try {
             // Get Snap Payment Page URL
             $paymentUrl = Snap::createTransaction($midtrans)->redirect_url;
+            // dd($paymentUrl);
 
             $transaction->payment_url = $paymentUrl;
             $transaction->save();
