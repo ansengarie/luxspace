@@ -5,9 +5,10 @@ namespace App\Http\Controllers\API;
 use Midtrans\Config;
 use Midtrans\Notification;
 use App\Models\Transaction;
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
-class MidtransCallback extends Controller
+class MidtransController extends Controller
 {
     public function callback()
     {
@@ -46,7 +47,7 @@ class MidtransCallback extends Controller
         } else if ($status == 'pending') {
             $transaction->status = 'PENDING';
         } else if ($status == 'deny') {
-            $transaction->status = 'CANCELLED';
+            $transaction->status = 'PENDING';
         } else if ($status == 'expire') {
             $transaction->status = 'CANCELLED';
         } else if ($status == 'cancel') {
@@ -56,7 +57,7 @@ class MidtransCallback extends Controller
         // Simpan transaksi
         $transaction->save();
 
-        // Return response
+        // Return response untuk midtrans
         return response()->json([
             'meta' => [
                 'code' => 200,
